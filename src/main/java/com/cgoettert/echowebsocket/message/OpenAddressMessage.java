@@ -2,12 +2,7 @@ package com.cgoettert.echowebsocket.message;
 
 import java.util.Objects;
 
-import com.cgoettert.echowebsocket.extensions.JsonExtension;
-
-import lombok.experimental.ExtensionMethod;
-
-@ExtensionMethod(JsonExtension.class)
-public class OpenAddressMessage implements Message {
+public class OpenAddressMessage extends BaseMessage {
 
     private Event event;
     private String address;
@@ -31,11 +26,6 @@ public class OpenAddressMessage implements Message {
         this.address = address;
         this.delay = 0;
         this.duration = duration;
-    }
-
-    @Override
-    public String toString() {
-        return this.toJson();
     }
 
 }

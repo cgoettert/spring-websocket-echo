@@ -3,8 +3,8 @@ package com.cgoettert.echowebsocket;
 import java.io.IOException;
 import java.util.SplittableRandom;
 
-import com.cgoettert.echowebsocket.message.Message;
 import com.cgoettert.echowebsocket.message.OpenAddressMessage;
+import com.cgoettert.echowebsocket.message.WSMessage;
 
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
@@ -20,14 +20,14 @@ public class DefaultBroadcastService implements BroadcastService {
     @Override
     public void broadcastMessage(WebSocketSession session) {
         try {
-            session.sendMessage(new TextMessage(generateOpenAddressMessage().toString()));
+            session.sendMessage(new TextMessage(generateOpenAddressMessage().toJson()));
         } catch (IOException e) {
             log.error(String.format("Erro ao enviar mensagem para %s", session.getId()), e);
         }
     }
 
-    private Message generateOpenAddressMessage() {
-        return new OpenAddressMessage(generateRandomAddress(), generateRandomNumber());
+    private WSMessage generateOpenAddressMessage() {
+        return new OpenAddressMessage(generateRandomAddress(), generateRandomNumber() * 10);
     }
 
     private String generateRandomAddress() {
