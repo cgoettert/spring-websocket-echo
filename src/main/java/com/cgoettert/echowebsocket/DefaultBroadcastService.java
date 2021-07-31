@@ -3,6 +3,9 @@ package com.cgoettert.echowebsocket;
 import java.io.IOException;
 import java.util.SplittableRandom;
 
+import com.cgoettert.echowebsocket.message.Message;
+import com.cgoettert.echowebsocket.message.OpenAddressMessage;
+
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 
@@ -17,14 +20,36 @@ public class DefaultBroadcastService implements BroadcastService {
     @Override
     public void broadcastMessage(WebSocketSession session) {
         try {
-            session.sendMessage(new TextMessage(generateRandomIntegerMessage()));
+            session.sendMessage(new TextMessage(generateOpenAddressMessage().toString()));
         } catch (IOException e) {
             log.error(String.format("Erro ao enviar mensagem para %s", session.getId()), e);
         }
     }
 
-    private String generateRandomIntegerMessage() {
-        return String.valueOf(new SplittableRandom().nextInt(0, 9));
+    private Message generateOpenAddressMessage() {
+        return new OpenAddressMessage(generateRandomAddress(), generateRandomNumber());
+    }
+
+    private String generateRandomAddress() {
+        return generateRandomLetter() + String.valueOf(generateRandomNumber());
+    }
+
+    private int generateRandomNumber() {
+        return new SplittableRandom().nextInt(1, 5);
+    }
+
+    private String generateRandomLetter() {
+        int num = generateRandomNumber();
+        if (num <= 2) {
+            return "A";
+        }
+        if (num == 3) {
+            return "B";
+        }
+        if (num >= 4) {
+            return "C";
+        }
+        return "A";
     }
 
 }
