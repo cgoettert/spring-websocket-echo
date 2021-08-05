@@ -18,8 +18,8 @@ public class OpenAddressMessage extends BaseMessage {
             throw new NullPointerException("Duração nula");
         }
 
-        if (duration <= 0 || duration > 60) {
-            throw new IllegalArgumentException("Duração deve ser maior que 0 e menor que 60");
+        if (duration < 10 || duration > 600) {
+            throw new IllegalArgumentException("Duração deve ser maior que 10 (1s) e menor que 600 (1min)");
         }
 
         this.event = Event.OPEN_ADDRESS;

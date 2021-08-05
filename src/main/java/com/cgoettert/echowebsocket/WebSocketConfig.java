@@ -13,8 +13,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(echoHandler(), "/echo")
-                .setAllowedOrigins("*");
+        registry.addHandler(echoHandler(), "/echo").setAllowedOrigins("*");
     }
 
     @Bean
@@ -24,7 +23,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
 
     @Bean
     public DefaultEchoService echoService() {
-        return new DefaultEchoService("Echoing: \"%s\"");
+        return new DefaultEchoService(null);
     }
 
     @Bean

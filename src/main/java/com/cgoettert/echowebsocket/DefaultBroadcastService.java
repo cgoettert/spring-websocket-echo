@@ -27,19 +27,23 @@ public class DefaultBroadcastService implements BroadcastService {
     }
 
     private WSMessage generateOpenAddressMessage() {
-        return new OpenAddressMessage(generateRandomAddress(), generateRandomNumber() * 10);
+        return new OpenAddressMessage(generateRandomAddress(), generateRandomDurationTime());
     }
 
     private String generateRandomAddress() {
-        return generateRandomLetter() + String.valueOf(generateRandomNumber());
+        return generateRandomLetter() + String.valueOf(generateRandomAddressNumber());
     }
 
-    private int generateRandomNumber() {
+    private int generateRandomDurationTime() {
+        return new SplittableRandom().nextInt(30, 100);
+    }
+
+    private int generateRandomAddressNumber() {
         return new SplittableRandom().nextInt(1, 5);
     }
 
     private String generateRandomLetter() {
-        int num = generateRandomNumber();
+        int num = generateRandomAddressNumber();
         if (num <= 2) {
             return "A";
         }
